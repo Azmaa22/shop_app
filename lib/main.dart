@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: AppBlocProvider.appBlocProvider,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
