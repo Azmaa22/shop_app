@@ -4,6 +4,8 @@ import 'package:shop_app/business_logic/cubits/onboarding_cubit/onboarding_cubit
 import 'package:shop_app/business_logic/cubits/onboarding_cubit/onboarding_states.dart';
 import 'package:shop_app/data/enums/auth_enum.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
+import 'package:shop_app/utilities/constants/strings_manager.dart';
+import 'package:shop_app/utilities/helpers/shared_preference_helper.dart';
 import 'package:shop_app/utilities/navigation/route_manager.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -12,11 +14,42 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void skipOnBoardingPages() {
+      SharedPreferenceHelper.saveData(
+        key: StringsManager.cachedOnBoarding,
+        value: true,
+      ).then((value) {
+        if (value) {
+          Navigator.pushNamed(
+            context,
+            RouteManager.loginRoute,
+          );
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorManager.kWhite,
-        elevation: 0.0,
-      ),
+          backgroundColor: ColorManager.kWhite,
+          elevation: 0.0,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  skipOnBoardingPages();
+                },
+                child: const Text(
+                  'Skip',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
+          ]),
       body: BlocBuilder<OnBoardingCubit, OnBoardingStates>(
         builder: (context, state) {
           OnBoardingCubit myCubit = OnBoardingCubit.get(context);
@@ -79,10 +112,7 @@ class OnBoardingScreen extends StatelessWidget {
                             Icons.arrow_forward_ios_sharp,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              RouteManager.authRoute,
-                            );
+                            skipOnBoardingPages();
                           },
                         )
                       ],

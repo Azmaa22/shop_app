@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:shop_app/business_logic/cubits/auth_cubit/auth_cubit.dart';
 import 'package:shop_app/business_logic/cubits/auth_cubit/auth_states.dart';
 import 'package:shop_app/presentation/widgets/button.dart';
 import 'package:shop_app/presentation/widgets/input.dart';
-import 'package:shop_app/presentation/widgets/toast_bar.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
-import 'package:shop_app/utilities/constants/strings_manager.dart';
-import 'package:shop_app/utilities/helpers/shared_preference_helper.dart';
 import 'package:shop_app/utilities/navigation/route_manager.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const String name = 'name';
     const String email = 'email';
     const String password = 'password';
+    const String phone = 'phone';
     final formKey = GlobalKey<FormBuilderState>();
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -31,23 +29,11 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: BlocConsumer<AuthCubit, AuthStates>(
             listener: (context, state) {
-              if (state is SignInIsLoadedState) {
-                ToastBar.show(
-                  message: state.message,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
+              if (state is SignUpIsLoadedState) {
+                Navigator.pushNamed(
+                  context,
+                  RouteManager.homeRoute,
                 );
-                SharedPreferenceHelper.saveData(
-                        key: StringsManager.cachedLoginToken,
-                        value: state.userData.token)
-                    .then((value) {
-                  if (value) {
-                    Navigator.pushNamed(
-                      context,
-                      RouteManager.homeRoute,
-                    );
-                  }
-                });
               }
             },
             builder: (context, state) {
@@ -60,17 +46,17 @@ class LoginScreen extends StatelessWidget {
                     height: size.height * 0.1,
                   ),
                   Text(
-                    'Login',
+                    'Register',
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   SizedBox(
                     height: size.height * 0.05,
                   ),
                   Text(
-                    'Login now to browse our hot offers',
+                    'Register',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  state is SignInIsErrorState
+                  state is SignUpIsErrorState
                       ? Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: size.height * 0.03,
@@ -87,11 +73,29 @@ class LoginScreen extends StatelessWidget {
                           height: size.height * 0.05,
                         ),
                   SizedBox(
-                    height: size.height * 0.3,
+                    height: size.height * 0.5,
                     child: FormBuilder(
                       key: formKey,
                       child: Column(
                         children: [
+                          Input(
+                            name: name,
+                            placeholder: 'please enter your name',
+                            icon: Icons.perm_identity,
+                            label: 'name',
+                            textInputType: TextInputType.name,
+                            onChange: (value) {},
+                            onValidate: FormBuilderValidators.compose(
+                              [
+                                FormBuilderValidators.required(
+                                  errorText: 'you should enter your name',
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
                           Input(
                             name: email,
                             placeholder: 'please enter your email',
@@ -132,30 +136,43 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: size.height * 0.02,
                           ),
-                          state is SignInIsLoadingState
+                          Input(
+                            name: phone,
+                            placeholder: 'please enter your phone',
+                            icon: Icons.phone,
+                            label: 'phone',
+                            isPassword: false,
+                            textInputType: TextInputType.phone,
+                            onChange: (value) {},
+                            onValidate: FormBuilderValidators.compose(
+                              [
+                                FormBuilderValidators.required(
+                                  errorText: 'you should enter your phone',
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          state is SignUpIsLoadingState
                               ? const CircularProgressIndicator(
                                   color: ColorManager.kPrimaryColor,
                                 )
                               : Button(
-                                  title: 'Login',
+                                  title: 'Register',
                                   onPress: () {
                                     formKey.currentState?.save();
                                     if (formKey.currentState!.validate()) {
                                       var user = formKey.currentState!.value;
 
-                                      myCubit.loginToApp(
-                                        userInfo: user,
-                                        headers: {
-                                          'lang': 'ar',
-                                        },
-                                      );
+                                      myCubit.registerToApp(
+                                          userInfo: user,
+                                          headers: {
+                                            'lang': 'en',
+                                          });
                                     } else {
-                                      ToastBar.show(
-                                        message:
-                                            'please enter the user data to login',
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                      );
+                                      print("validation failed");
                                     }
                                   },
                                 )
@@ -165,16 +182,18 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Text('Don\'t have an account ? '),
+                      const Text(
+                        'Do you already have an account?',
+                      ),
                       TextButton(
                         onPressed: () {
                           Navigator.pushNamed(
                             context,
-                            RouteManager.registerRoute,
+                            RouteManager.loginRoute,
                           );
                         },
                         child: const Text(
-                          'Register Now!',
+                          'Login Now!',
                         ),
                       ),
                     ],
