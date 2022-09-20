@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/business_logic/cubits/auth_cubit/auth_states.dart';
 import 'package:shop_app/data/enums/auth_enum.dart';
 import 'package:shop_app/data/models/user_model.dart';
-import 'package:shop_app/services/apis/users_api.dart';
+import 'package:shop_app/services/apis/api_end_points.dart';
 import 'package:shop_app/utilities/helpers/dio_helper.dart';
 
 class AuthCubit extends Cubit<AuthStates> {

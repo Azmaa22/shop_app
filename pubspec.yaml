@@ -18,6 +18,8 @@ dependencies:
   form_builder_validators: ^8.3.0
   fluttertoast: ^8.0.9
   shared_preferences: ^2.0.15
+  fluid_bottom_nav_bar: ^1.3.0
+  cached_network_image: ^3.2.2
 
 dev_dependencies:
   flutter_test:
