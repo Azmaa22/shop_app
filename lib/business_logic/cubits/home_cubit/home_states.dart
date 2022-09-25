@@ -1,3 +1,4 @@
+import 'package:shop_app/data/models/favorite_model.dart';
 import 'package:shop_app/data/models/home_model.dart';
 
 class HomeStates {}

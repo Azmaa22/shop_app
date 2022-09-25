@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shop_app/business_logic/cubits/category_cubit/category_cubit.dart';
 import 'package:shop_app/business_logic/cubits/category_cubit/category_states.dart';
+import 'package:shop_app/business_logic/cubits/home_cubit/home_cubit.dart';
 import 'package:shop_app/data/entities/category_details_screen_arguments.dart';
 import 'package:shop_app/data/models/product_model.dart';
 import 'package:shop_app/presentation/widgets/product_card.dart';
@@ -43,6 +44,7 @@ class ProductsScreen extends StatelessWidget {
                   products.length,
                   (index) => ProductCard(
                     product: products[index],
+                    onFavorite: () {},
                   ),
                 ),
               );

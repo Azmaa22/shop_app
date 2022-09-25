@@ -5,9 +5,11 @@ import 'package:shop_app/utilities/constants/color_manager.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
+  final VoidCallback onFavorite;
   const ProductCard({
     super.key,
     required this.product,
+    required this.onFavorite,
   });
 
   @override
@@ -70,10 +72,10 @@ class ProductCard extends StatelessWidget {
               ),
               const Spacer(),
               IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_border,
-                  color: Colors.grey,
+                onPressed: onFavorite,
+                icon: Icon(
+                  product.inFavorites ? Icons.favorite : Icons.favorite_border,
+                  color: product.inFavorites ? Colors.yellow : Colors.grey,
                 ),
               )
             ],

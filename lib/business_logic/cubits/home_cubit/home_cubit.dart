@@ -9,6 +9,8 @@ import 'package:shop_app/utilities/helpers/shared_preference_helper.dart';
 class HomeCubit extends Cubit<HomeStates> {
   HomeCubit() : super(HomeInitState());
   static HomeCubit get(context) => BlocProvider.of(context);
+  Map<int, bool> favorites = {};
+
   void initHome() async {
     emit(HomeIsLoadingState());
     DioHelper.getData(url: HomeEndPoints.home, headers: {
@@ -17,6 +19,16 @@ class HomeCubit extends Cubit<HomeStates> {
         key: StringsManager.cachedLoginToken,
       ),
     }).then((value) {
+      HomeModel.fromJson(
+        value.data,
+      ).data.products.forEach(
+        (element) {
+          favorites.addAll({
+            element.id: element.inFavorites,
+          });
+        },
+      );
+
       emit(
         HomeIsLoadedState(
           homeData: HomeModel.fromJson(

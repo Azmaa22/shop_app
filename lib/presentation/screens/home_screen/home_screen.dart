@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/business_logic/cubits/favorite_cubit/favorite_cubit.dart';
 import 'package:shop_app/business_logic/cubits/home_cubit/home_cubit.dart';
 import 'package:shop_app/business_logic/cubits/home_cubit/home_states.dart';
 import 'package:shop_app/data/models/product_model.dart';
 import 'package:shop_app/presentation/screens/home_screen/widgets/banner_slider.dart';
-import 'package:shop_app/presentation/widgets/network_image_container.dart';
 import 'package:shop_app/presentation/widgets/product_card.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
 
@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeStates>(
       builder: (context, state) {
+        print('state in home $state');
         if (state is HomeIsLoadedState) {
           List<ProductModel> products = state.homeData.data.products;
           return Column(
@@ -28,6 +29,12 @@ class HomeScreen extends StatelessWidget {
                     products.length,
                     (index) => ProductCard(
                       product: products[index],
+                      onFavorite: () {
+                        FavoriteCubit.get(context).changeProductFavorite(
+                          productId: products[index].id,
+                        );
+                        HomeCubit.get(context).initHome();
+                      },
                     ),
                   ),
                 ),

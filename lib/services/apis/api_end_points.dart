@@ -10,3 +10,7 @@ class HomeEndPoints {
 class CategoriesEndPoints {
   static const String categories = 'categories';
 }
+
+class FavoriteEndPoints {
+  static const String favorites = 'favorites';
+}

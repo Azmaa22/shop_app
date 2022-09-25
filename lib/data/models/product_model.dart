@@ -5,8 +5,7 @@ class ProductModel {
   final dynamic discount;
   final String image;
   final String name;
-
-  final bool inFavorites;
+  bool inFavorites;
   final bool inCart;
   ProductModel({
     required this.id,
