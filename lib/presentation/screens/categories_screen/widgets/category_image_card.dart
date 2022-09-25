@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/presentation/widgets/network_image_container.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
 
 class CategoryImageCard extends StatelessWidget {
@@ -30,13 +31,8 @@ class CategoryImageCard extends StatelessWidget {
             15.0,
           ),
         ),
-        image: DecorationImage(
-          image: NetworkImage(
-            image,
-          ),
-          fit: BoxFit.cover,
-        ),
       ),
+      child: NetworkImageContainer(imagePath: image),
     );
   }
 }

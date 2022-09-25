@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shop_app/business_logic/cubits/category_cubit/category_cubit.dart';
 import 'package:shop_app/business_logic/cubits/category_cubit/category_states.dart';
+import 'package:shop_app/data/entities/category_details_screen_arguments.dart';
 import 'package:shop_app/data/models/category_model.dart';
 import 'package:shop_app/presentation/screens/categories_screen/widgets/category_image_card.dart';
 import 'package:shop_app/presentation/screens/categories_screen/widgets/category_name_card.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
+import 'package:shop_app/utilities/navigation/route_manager.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -30,17 +32,29 @@ class CategoriesScreen extends StatelessWidget {
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
               itemBuilder: (context, index) {
-                return Stack(
-                  alignment: AlignmentDirectional.bottomCenter,
-                  children: [
-                    CategoryImageCard(
-                      height: (index % 5 + 1) * 100,
-                      image: categories[index].image,
-                    ),
-                    CategoryNameCard(
-                      name: categories[index].name,
-                    ),
-                  ],
+                return InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RouteManager.productsRoute,
+                      arguments: CategoryDetailsScreenArguments(
+                        categoryId: categories[index].id,
+                        categoryName: categories[index].name,
+                      ),
+                    );
+                  },
+                  child: Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: [
+                      CategoryImageCard(
+                        height: (index % 5 + 1) * 100,
+                        image: categories[index].image,
+                      ),
+                      CategoryNameCard(
+                        name: categories[index].name,
+                      ),
+                    ],
+                  ),
                 );
               },
             );

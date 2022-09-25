@@ -1,3 +1,4 @@
+import 'package:shop_app/data/models/category_details_model.dart';
 import 'package:shop_app/data/models/category_model.dart';
 
 abstract class CategoryStates {}
@@ -19,4 +20,18 @@ class CategoryIsErrorState extends CategoryStates {
   CategoryIsErrorState({
     required this.errorMsg,
   });
+}
+
+class ProductsOfCategoryIsLoadingState extends CategoryStates {}
+
+class ProductsOfCategoryIsLoadedState extends CategoryStates {
+  final CategoryDetailsModel categoryDetailsModel;
+
+  ProductsOfCategoryIsLoadedState({required this.categoryDetailsModel});
+}
+
+class ProductsOfCategoryIsErrorState extends CategoryStates {
+  final String msgError;
+
+  ProductsOfCategoryIsErrorState({required this.msgError});
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/data/entities/category_details_screen_arguments.dart';
 import 'package:shop_app/presentation/screens/auth_screens/login_screen.dart';
 import 'package:shop_app/presentation/screens/auth_screens/register_screen.dart';
+import 'package:shop_app/presentation/screens/products_screen/products_screen.dart';
 import 'package:shop_app/presentation/screens/search_screen/search_screen.dart';
 import 'package:shop_app/presentation/screens/shop_layout_screen/shop_layout_screen.dart';
 import 'package:shop_app/presentation/screens/onboarding_screen/onboarding_screen.dart';
@@ -29,6 +31,14 @@ class RouteGenerator {
       case RouteManager.searchRoute:
         return MaterialPageRoute(
           builder: (context) => const SearchScreen(),
+        );
+      case RouteManager.productsRoute:
+        final args = routeSettings.arguments as CategoryDetailsScreenArguments;
+
+        return MaterialPageRoute(
+          builder: (context) => ProductsScreen(
+            categoryDetailsScreenArguments: args,
+          ),
         );
       default:
         return unDefinedRoute();

@@ -6,6 +6,7 @@ import 'package:shop_app/business_logic/cubits/auth_cubit/auth_cubit.dart';
 import 'package:shop_app/business_logic/cubits/auth_cubit/auth_states.dart';
 import 'package:shop_app/presentation/widgets/button.dart';
 import 'package:shop_app/presentation/widgets/input.dart';
+import 'package:shop_app/presentation/widgets/toast_bar.dart';
 import 'package:shop_app/utilities/constants/color_manager.dart';
 import 'package:shop_app/utilities/navigation/route_manager.dart';
 
@@ -172,7 +173,11 @@ class RegisterScreen extends StatelessWidget {
                                             'lang': 'en',
                                           });
                                     } else {
-                                      print("validation failed");
+                                      ToastBar.show(
+                                        message: "validation failed",
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                      );
                                     }
                                   },
                                 )
