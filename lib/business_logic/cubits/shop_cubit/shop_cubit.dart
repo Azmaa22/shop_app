@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/business_logic/cubits/shop_cubit/shop_states.dart';
 import 'package:shop_app/presentation/screens/categories_screen/categories_screen.dart';
 import 'package:shop_app/presentation/screens/favorite_screen/favorite_screen.dart';
-import 'package:shop_app/presentation/screens/products_screen/products_screen.dart';
+import 'package:shop_app/presentation/screens/home_screen/home_screen.dart';
 import 'package:shop_app/presentation/screens/settings_screen/settings_screen.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
@@ -30,7 +30,7 @@ class ShopCubit extends Cubit<ShopStates> {
     ),
   ];
   List<Widget> bottomNavScreens = const [
-    ProductsScreen(),
+    HomeScreen(),
     CategoriesScreen(),
     FavoriteScreen(),
     SettingsScreen(),

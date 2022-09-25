@@ -25,7 +25,6 @@ class HomeCubit extends Cubit<HomeStates> {
         ),
       );
     }).catchError((error) {
-      print('error==> $error');
       emit(
         HomeIsErrorState(errorMsg: 'error'),
       );
